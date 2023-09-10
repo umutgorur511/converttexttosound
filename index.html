@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech-converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500&family=Roboto:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+ <div class="hero">
+    <h1>Text TO Speech Converter</h1>
+    <textarea placeholder="bir şey yazınız"></textarea>
+    <div class="row">
+        <select></select>
+        <button> <img src="images/play.png" alt="">dinle</button>
+    </div>
+</div> 
+
+<script>
+let Speech=new SpeechSynthesisUtterance();
+let voices=[];
+let voiceselect=document.querySelector("select");
+window.speechSynthesis.onvoiceschanged=()=>{
+    voices=window.speechSynthesis.getVoices();
+    Speech.voice=voices[0];
+
+    voices.forEach((voice,i)=>(voiceselect.options[i] =new Option(voice.name,i)));
+
+};
+
+voiceselect.addEventListener("change",()=>{
+Speech.voice=voices[voiceselect.value];
+})
+
+document.querySelector("button").addEventListener("click",()=>{
+
+Speech.text=document.querySelector("textarea").value;
+window.speechSynthesis.speak(Speech);
+
+
+
+});
+
+
+
+</script>
+</body>
+</html>
